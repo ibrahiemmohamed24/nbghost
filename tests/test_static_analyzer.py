@@ -21,3 +21,13 @@ def test_variable_used_before_defined_is_flagged():
     issues = find_undefined_references(cells)
 
     assert issues == [{"position": 0, "variable": "x", "defined_at": 1}]
+
+
+def test_builtin_and_unknown_names_are_not_flagged():
+    cells = [
+        {"cell_type": "code", "source": "print(len([1, 2, 3]))"},
+    ]
+
+    issues = find_undefined_references(cells)
+
+    assert issues == []
