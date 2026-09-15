@@ -11,5 +11,5 @@ def test_load_cells_reads_cell_type_and_execution_count():
     cells = load_cells(notebook_path)
 
     assert len(cells) == 2
-    assert cells[0] == {"cell_type": "code", "execution_count": 1}
-    assert cells[1] == {"cell_type": "code", "execution_count": 2}
+    assert cells[0] == {"cell_type": "code", "execution_count": 1, "source": "x = 1"}
+    assert cells[1] == {"cell_type": "code", "execution_count": 2, "source": "print(x)"}
