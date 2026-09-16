@@ -31,3 +31,25 @@ def test_builtin_and_unknown_names_are_not_flagged():
     issues = find_undefined_references(cells)
 
     assert issues == []
+
+
+def test_import_defines_the_imported_name():
+    cells = [
+        {"cell_type": "code", "source": "import pandas as pd"},
+        {"cell_type": "code", "source": "pd.DataFrame()"},
+    ]
+
+    issues = find_undefined_references(cells)
+
+    assert issues == []
+
+
+def test_import_used_before_the_import_cell_is_flagged():
+    cells = [
+        {"cell_type": "code", "source": "df = pd.DataFrame()"},
+        {"cell_type": "code", "source": "import pandas as pd"},
+    ]
+
+    issues = find_undefined_references(cells)
+
+    assert issues == [{"position": 0, "variable": "pd", "defined_at": 1}]

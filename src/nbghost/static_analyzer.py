@@ -15,6 +15,9 @@ def _collect_names(source):
                 defined.add(node.id)
             elif isinstance(node.ctx, ast.Load):
                 used.add(node.id)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for alias in node.names:
+                defined.add(alias.asname or alias.name)
 
     return defined, used
 
