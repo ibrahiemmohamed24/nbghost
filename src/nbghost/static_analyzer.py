@@ -3,23 +3,65 @@
 import ast
 
 
+class _TopLevelNameCollector(ast.NodeVisitor):
+    """Collect defined/used names at a cell's top level, respecting scope.
+
+    Names inside function bodies, lambdas, and comprehensions are local
+    to those scopes and must not leak into the notebook-level namespace.
+    """
+
+    def __init__(self):
+        self.defined = set()
+        self.used = set()
+
+    def visit_Name(self, node):
+        if isinstance(node.ctx, ast.Store):
+            self.defined.add(node.id)
+        elif isinstance(node.ctx, ast.Load):
+            self.used.add(node.id)
+
+    def visit_Import(self, node):
+        for alias in node.names:
+            self.defined.add(alias.asname or alias.name)
+
+    def visit_ImportFrom(self, node):
+        for alias in node.names:
+            self.defined.add(alias.asname or alias.name)
+
+    def visit_FunctionDef(self, node):
+        self.defined.add(node.name)
+        # Do not descend: parameters and body are local to the function.
+
+    def visit_AsyncFunctionDef(self, node):
+        self.defined.add(node.name)
+
+    def visit_ClassDef(self, node):
+        self.defined.add(node.name)
+        # Do not descend: the class body is its own scope.
+
+    def visit_Lambda(self, node):
+        pass  # Anonymous; nothing to define, and body is local.
+
+    def visit_ListComp(self, node):
+        pass  # The loop variable is local to the comprehension.
+
+    def visit_SetComp(self, node):
+        pass
+
+    def visit_DictComp(self, node):
+        pass
+
+    def visit_GeneratorExp(self, node):
+        pass
+
+
 def _collect_names(source):
     """Return (defined_names, used_names) for a single cell's source code."""
     tree = ast.parse(source)
-    defined = set()
-    used = set()
-
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Name):
-            if isinstance(node.ctx, ast.Store):
-                defined.add(node.id)
-            elif isinstance(node.ctx, ast.Load):
-                used.add(node.id)
-        elif isinstance(node, (ast.Import, ast.ImportFrom)):
-            for alias in node.names:
-                defined.add(alias.asname or alias.name)
-
-    return defined, used
+    collector = _TopLevelNameCollector()
+    for statement in tree.body:
+        collector.visit(statement)
+    return collector.defined, collector.used
 
 
 def find_undefined_references(cells):

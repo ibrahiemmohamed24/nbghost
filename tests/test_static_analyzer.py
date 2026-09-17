@@ -53,3 +53,15 @@ def test_import_used_before_the_import_cell_is_flagged():
     issues = find_undefined_references(cells)
 
     assert issues == [{"position": 0, "variable": "pd", "defined_at": 1}]
+
+
+def test_function_local_variable_does_not_leak_to_notebook_scope():
+    cells = [
+        {"cell_type": "code", "source": "def f():\n    x = 1\n    return x"},
+        {"cell_type": "code", "source": "print(x)"},
+        {"cell_type": "code", "source": "x = 5"},
+    ]
+
+    issues = find_undefined_references(cells)
+
+    assert issues == [{"position": 1, "variable": "x", "defined_at": 2}]
