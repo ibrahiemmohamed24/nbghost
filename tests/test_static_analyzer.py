@@ -65,3 +65,15 @@ def test_function_local_variable_does_not_leak_to_notebook_scope():
     issues = find_undefined_references(cells)
 
     assert issues == [{"position": 1, "variable": "x", "defined_at": 2}]
+
+
+def test_list_comprehension_variable_does_not_leak_to_notebook_scope():
+    cells = [
+        {"cell_type": "code", "source": "squares = [n * n for n in range(5)]"},
+        {"cell_type": "code", "source": "print(n)"},
+        {"cell_type": "code", "source": "n = 10"},
+    ]
+
+    issues = find_undefined_references(cells)
+
+    assert issues == [{"position": 1, "variable": "n", "defined_at": 2}]
