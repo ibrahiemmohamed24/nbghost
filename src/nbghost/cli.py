@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import typer
 from rich.console import Console
@@ -74,3 +74,4 @@ def check_refs(notebook: Path = NOTEBOOK_ARG) -> None:
 def version() -> None:
     """Show the installed version."""
     console.print(__version__)
+

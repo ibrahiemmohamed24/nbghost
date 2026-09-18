@@ -1,4 +1,4 @@
-from nbghost.order import find_order_issues
+﻿from nbghost.order import find_order_issues
 
 
 def test_clean_notebook_has_no_issues():
@@ -36,3 +36,4 @@ def test_markdown_and_unexecuted_cells_are_ignored():
     issues = find_order_issues(cells)
 
     assert issues == []
+

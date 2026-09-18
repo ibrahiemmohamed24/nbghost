@@ -1,4 +1,4 @@
-"""Load notebook cells from a .ipynb file."""
+﻿"""Load notebook cells from a .ipynb file."""
 
 import json
 from pathlib import Path
@@ -24,3 +24,4 @@ def load_cells(notebook_path):
         )
 
     return cells
+

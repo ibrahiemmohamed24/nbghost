@@ -1,4 +1,4 @@
-from nbghost.static_analyzer import find_undefined_references
+﻿from nbghost.static_analyzer import find_undefined_references
 
 
 def test_variable_defined_before_use_has_no_issues():
@@ -77,3 +77,4 @@ def test_list_comprehension_variable_does_not_leak_to_notebook_scope():
     issues = find_undefined_references(cells)
 
     assert issues == [{"position": 1, "variable": "n", "defined_at": 2}]
+

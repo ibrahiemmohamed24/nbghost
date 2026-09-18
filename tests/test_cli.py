@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 from typer.testing import CliRunner
 
@@ -42,3 +42,4 @@ def test_check_refs_exits_one_on_notebook_with_undefined_reference():
 
     assert result.exit_code == 1
     assert "young_survival_rate" in result.stdout
+

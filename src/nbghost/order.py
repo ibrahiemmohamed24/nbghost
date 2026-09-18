@@ -1,4 +1,4 @@
-"""Detect notebooks where cells were executed out of their written order."""
+﻿"""Detect notebooks where cells were executed out of their written order."""
 
 
 def find_order_issues(cells):
@@ -22,3 +22,4 @@ def find_order_issues(cells):
             previous_count = execution_count
 
     return issues
+

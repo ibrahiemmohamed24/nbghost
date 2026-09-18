@@ -1,4 +1,4 @@
-"""Detect notebook cells that use variables defined in a later cell."""
+﻿"""Detect notebook cells that use variables defined in a later cell."""
 
 import ast
 
@@ -91,3 +91,4 @@ def find_undefined_references(cells):
                 )
 
     return issues
+

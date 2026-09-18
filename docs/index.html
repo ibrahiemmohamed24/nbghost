@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>nbghost — build log</title>
+<title>nbghost: build log</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -300,12 +300,12 @@
   <div class="wrap">
     <div class="label">the problem</div>
     <h2>It passed on your machine because you ran it out of order.</h2>
-    <p class="lede">Jupyter lets you run cells in any order you like. The notebook remembers what you did — not what the file says. Hand it to someone else, and the file's own order is all they have.</p>
+    <p class="lede">Jupyter lets you run cells in any order you like. The notebook remembers what you did, not what the file says. Hand it to someone else, and the file's own order is all they have.</p>
     <div class="scenario">
       <div class="cell"><div class="tag">Cell 1</div><code>print(young_survival_rate)</code></div>
       <div class="cell bad"><div class="tag">Cell 2</div><code>young_survival_rate = df[df.Age &lt; 18].Survived.mean()</code></div>
     </div>
-    <p class="lede" style="margin-top:18px; font-size:15px;">Run 2 then 1 in your kernel and it works fine. Run the file top to bottom — the order it's actually saved in — and cell 1 fails before cell 2 ever runs.</p>
+    <p class="lede" style="margin-top:18px; font-size:15px;">Run 2 then 1 in your kernel and it works fine. Run the file top to bottom, the order it's actually saved in, and cell 1 fails before cell 2 ever runs.</p>
   </div>
 </section>
 
@@ -313,7 +313,7 @@
   <div class="wrap">
     <div class="label">what's shipped</div>
     <h2>Two checks, each catching a different kind of hidden state.</h2>
-    <p class="lede">Both read the .ipynb file as written — no kernel, no execution — and exit non-zero the moment something's wrong, so a pipeline can act on it.</p>
+    <p class="lede">Both read the .ipynb file as written, no kernel, no execution, and exit non-zero the moment something's wrong, so a pipeline can act on it.</p>
     <div class="checks">
       <div class="check">
         <div class="num">01</div>
@@ -334,12 +334,12 @@
 <section class="case">
   <div class="wrap">
     <div class="label">a bug worth keeping</div>
-    <h2>A test passed for the wrong reason — and that hid a real bug.</h2>
+    <h2>A test passed for the wrong reason, and that hid a real bug.</h2>
     <div class="case-grid">
       <div class="case-story">
         <p><strong>check-refs</strong> walked every name in a cell flat, with no idea of scope. A variable defined inside a function looked identical to one defined at the notebook's top level.</p>
-        <p>The first import-handling test passed immediately. That felt like confirmation. It wasn't — the function-local case simply hadn't been used anywhere else yet, so there was nothing for the flat walk to get wrong <em>on that test</em>.</p>
-        <p>A second, adversarial test — a variable local to a function, reused by name at the top level — failed instantly. The flat walk had no concept of "this name doesn't exist out here."</p>
+        <p>The first import-handling test passed immediately. That felt like confirmation. It wasn't: the function-local case simply hadn't been used anywhere else yet, so there was nothing for the flat walk to get wrong <em>on that test</em>.</p>
+        <p>A second, adversarial test (a variable local to a function, reused by name at the top level) failed instantly. The flat walk had no concept of "this name doesn't exist out here."</p>
         <div class="verdict">The fix wasn't another special case. It was replacing the flat walk with a scope-aware visitor that simply never descends into a function, lambda, or comprehension body.</div>
       </div>
       <div class="compare">
@@ -359,8 +359,8 @@
 <section class="proof">
   <div class="wrap">
     <div class="label">proof, not theory</div>
-    <h2>Run against a real, messy notebook — not a clean fixture.</h2>
-    <p class="lede">Built on the Titanic dataset with a function, a loop, a list comprehension, and one cell run deliberately out of order — every case the unit tests cover, together, on real data.</p>
+    <h2>Run against a real, messy notebook, not a clean fixture.</h2>
+    <p class="lede">Built on the Titanic dataset with a function, a loop, a list comprehension, and one cell run deliberately out of order: every case the unit tests cover, together, on real data.</p>
     <div class="proof-grid">
       <div class="proof-item"><div class="k">rows of real data</div><div class="v">891</div></div>
       <div class="proof-item"><div class="k">hidden-state bug found</div><div class="v">1</div></div>
@@ -380,7 +380,7 @@
       <div class="stat"><div class="v" data-target="0">0</div><div class="k">manual test steps</div></div>
     </div>
     <div class="tags">
-      <span>Python</span><span>Typer</span><span>Rich</span><span>pytest</span><span>AST</span><span>Docker — next</span>
+      <span>Python</span><span>Typer</span><span>Rich</span><span>pytest</span><span>AST</span><span>Docker (next)</span>
     </div>
   </div>
 </section>
@@ -412,3 +412,4 @@
 
 </body>
 </html>
+

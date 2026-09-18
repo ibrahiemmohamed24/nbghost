@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 from nbghost.loader import load_cells
 
@@ -13,3 +13,4 @@ def test_load_cells_reads_cell_type_and_execution_count():
     assert len(cells) == 2
     assert cells[0] == {"cell_type": "code", "execution_count": 1, "source": "x = 1"}
     assert cells[1] == {"cell_type": "code", "execution_count": 2, "source": "print(x)"}
+
