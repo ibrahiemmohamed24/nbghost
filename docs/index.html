@@ -32,10 +32,26 @@
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
 
   /* ---------- HERO ---------- */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:10;
+    height:64px;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding:0 32px;
+    background:linear-gradient(to bottom, rgba(9,38,52,.85), rgba(9,38,52,0));
+  }
+  .topbar a{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:50%;
+    color:var(--white); opacity:.85;
+    transition:opacity .15s ease;
+  }
+  .topbar a:hover{opacity:1;}
+  .topbar svg{width:22px; height:22px;}
+
   .hero{
     background:var(--navy);
     color:var(--white);
-    padding:120px 0 90px;
+    padding:170px 0 120px;
     position:relative;
     overflow:hidden;
   }
@@ -50,51 +66,43 @@
   @keyframes draw{ to{ width:100%; } }
   .hero-inner{opacity:0; transform:translateY(14px); animation:rise .7s ease-out .9s forwards;}
   @keyframes rise{ to{opacity:1; transform:none;} }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:10px;
-    font-size:13px; letter-spacing:.02em; color:var(--orange);
-    font-weight:600; margin-bottom:22px;
-  }
-  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);
-    animation:blink 1.6s ease-in-out infinite;}
-  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
   h1{
     font-family:var(--display);
     font-weight:900;
     font-size:clamp(38px,6vw,64px);
-    line-height:1.04;
+    line-height:1.12;
     letter-spacing:-0.01em;
-    max-width:12ch;
+    max-width:13ch;
   }
   .hero p.sub{
-    margin-top:26px;
+    margin-top:36px;
     max-width:46ch;
     font-size:19px;
     color:#C7D7DE;
   }
   .hero-meta{
-    margin-top:44px;
-    display:flex; gap:28px; flex-wrap:wrap;
+    margin-top:60px;
+    display:flex; gap:36px; flex-wrap:wrap;
     font-size:14px; color:#8FA8B2;
   }
   .hero-meta span{color:var(--white); font-weight:600;}
 
   /* ---------- SECTION SCAFFOLD ---------- */
-  section{padding:84px 0;}
+  section{padding:110px 0;}
   .label{
     font-family:var(--sans);
     font-size:14px;
     font-weight:600;
     color:var(--teal);
-    margin-bottom:14px;
+    margin-bottom:18px;
   }
   h2{
     font-family:var(--display);
     font-weight:800;
     font-size:clamp(26px,4vw,36px);
-    line-height:1.15;
+    line-height:1.25;
     max-width:20ch;
-    margin-bottom:20px;
+    margin-bottom:26px;
   }
   .lede{max-width:56ch; color:#3C4A50; font-size:17.5px;}
 
@@ -261,10 +269,23 @@
 </head>
 <body>
 
+<div class="topbar">
+  <a href="https://github.com/ibrahiemmohamed24/nbghost" target="_blank" rel="noopener" aria-label="View nbghost on GitHub">
+    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+      0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+      -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07
+      -1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+      a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15
+      0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38
+      A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+  </a>
+</div>
+
 <section class="hero">
   <div class="tape"></div>
   <div class="wrap hero-inner">
-    <div class="eyebrow"><span class="dot"></span>build log</div>
     <h1>Catching the notebook that only works by accident.</h1>
     <p class="sub">nbghost re-runs your notebook clean and diffs what actually happened, so a hidden run order or an undefined variable never reaches CI disguised as a passing check.</p>
     <div class="hero-meta">
