@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nbghost — build log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#F9F9F9;
+    --teal:#004E72;
+    --navy:#092634;
+    --orange:#FF6E42;
+    --ink:#0C1A22;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+    --display:'Archivo', -apple-system, sans-serif;
+    --max:920px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--navy);
+    color:var(--white);
+    padding:120px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .tape{
+    position:absolute;
+    top:0; left:0;
+    height:4px;
+    width:0%;
+    background:var(--orange);
+    animation:draw 1.1s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  @keyframes draw{ to{ width:100%; } }
+  .hero-inner{opacity:0; transform:translateY(14px); animation:rise .7s ease-out .9s forwards;}
+  @keyframes rise{ to{opacity:1; transform:none;} }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.02em; color:var(--orange);
+    font-weight:600; margin-bottom:22px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);
+    animation:blink 1.6s ease-in-out infinite;}
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
+  h1{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(38px,6vw,64px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:12ch;
+  }
+  .hero p.sub{
+    margin-top:26px;
+    max-width:46ch;
+    font-size:19px;
+    color:#C7D7DE;
+  }
+  .hero-meta{
+    margin-top:44px;
+    display:flex; gap:28px; flex-wrap:wrap;
+    font-size:14px; color:#8FA8B2;
+  }
+  .hero-meta span{color:var(--white); font-weight:600;}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:84px 0;}
+  .label{
+    font-family:var(--sans);
+    font-size:14px;
+    font-weight:600;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(26px,4vw,36px);
+    line-height:1.15;
+    max-width:20ch;
+    margin-bottom:20px;
+  }
+  .lede{max-width:56ch; color:#3C4A50; font-size:17.5px;}
+
+  /* ---------- PROBLEM ---------- */
+  .problem{background:var(--white);}
+  .scenario{
+    margin-top:44px;
+    border:1px solid #E3E3E3;
+    border-radius:6px;
+    overflow:hidden;
+    font-family:var(--sans);
+  }
+  .cell{
+    display:flex;
+    border-bottom:1px solid #E3E3E3;
+    font-size:14.5px;
+  }
+  .cell:last-child{border-bottom:none;}
+  .cell .tag{
+    flex:0 0 92px;
+    padding:16px 14px;
+    background:#F1F1F1;
+    color:#7A7A7A;
+    font-weight:600;
+    border-right:1px solid #E3E3E3;
+  }
+  .cell.bad .tag{color:var(--orange);}
+  .cell code{
+    padding:16px 18px;
+    color:var(--ink);
+    white-space:pre;
+    overflow-x:auto;
+  }
+  .cell.bad{background:#FFF4EF;}
+
+  /* ---------- APPROACH ---------- */
+  .approach{background:var(--navy); color:var(--white);}
+  .approach .label{color:var(--orange);}
+  .approach h2{color:var(--white);}
+  .approach .lede{color:#B9CBD3;}
+  .checks{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:rgba(255,255,255,.12);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .check{
+    background:var(--navy);
+    padding:34px 30px;
+  }
+  .check .num{
+    font-family:var(--display);
+    font-size:15px;
+    color:var(--orange);
+    font-weight:800;
+    margin-bottom:16px;
+  }
+  .check h3{
+    font-family:var(--display);
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:12px;
+  }
+  .check p{color:#B9CBD3; font-size:15px;}
+  .check .cmd{
+    margin-top:18px;
+    font-size:13px;
+    color:var(--orange);
+    background:rgba(255,110,66,.1);
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:4px;
+  }
+  @media (max-width:700px){ .checks{grid-template-columns:1fr;} }
+
+  /* ---------- CASE STUDY ---------- */
+  .case{background:var(--white);}
+  .case-grid{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width:760px){ .case-grid{grid-template-columns:1fr;} }
+  .case-story p{color:#3C4A50; font-size:16.5px; margin-bottom:16px;}
+  .case-story strong{color:var(--ink);}
+  .verdict{
+    background:#F1F1F1;
+    border-left:3px solid var(--orange);
+    padding:16px 20px;
+    font-size:15px;
+    color:var(--ink);
+    margin-top:22px;
+  }
+  .compare{
+    border:1px solid #E3E3E3;
+    border-radius:8px;
+    padding:28px;
+    background:var(--navy);
+    color:var(--white);
+  }
+  .compare .row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:18px 0; border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  .compare .row:last-child{border-bottom:none;}
+  .compare .row .k{font-size:14px; color:#B9CBD3;}
+  .compare .row .v{
+    font-family:var(--display); font-weight:800; font-size:26px;
+  }
+  .compare .row.before .v{color:#8FA8B2;}
+  .compare .row.after .v{color:var(--orange);}
+
+  /* ---------- PROOF ---------- */
+  .proof{background:var(--white);}
+  .proof-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:#E3E3E3;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .proof-item{background:var(--white); padding:30px 26px;}
+  .proof-item .k{font-size:13.5px; color:#7A7A7A; margin-bottom:10px;}
+  .proof-item .v{
+    font-family:var(--display); font-weight:800; font-size:28px;
+    color:var(--teal);
+  }
+  @media (max-width:700px){ .proof-grid{grid-template-columns:1fr;} }
+
+  /* ---------- STATS FOOTER ---------- */
+  .stats{background:var(--orange); color:var(--navy);}
+  .stats h2{color:var(--navy); max-width:none;}
+  .stat-row{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+  }
+  @media (max-width:700px){ .stat-row{grid-template-columns:1fr 1fr;} }
+  .stat .v{
+    font-family:var(--display); font-weight:900; font-size:clamp(34px,5vw,52px);
+  }
+  .stat .k{font-size:14px; font-weight:600; margin-top:6px;}
+
+  .tags{margin-top:56px; display:flex; gap:10px; flex-wrap:wrap;}
+  .tags span{
+    background:var(--navy); color:var(--white);
+    font-size:13px; font-weight:500;
+    padding:7px 14px; border-radius:20px;
+  }
+
+  footer{
+    background:var(--navy); color:#8FA8B2;
+    padding:34px 0; font-size:13.5px;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="tape"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow"><span class="dot"></span>build log</div>
+    <h1>Catching the notebook that only works by accident.</h1>
+    <p class="sub">nbghost re-runs your notebook clean and diffs what actually happened, so a hidden run order or an undefined variable never reaches CI disguised as a passing check.</p>
+    <div class="hero-meta">
+      <div><span>Python</span> CLI</div>
+      <div><span>0</span> cloud dependencies</div>
+      <div><span>TDD</span> from commit one</div>
+    </div>
+  </div>
+</section>
+
+<section class="problem">
+  <div class="wrap">
+    <div class="label">the problem</div>
+    <h2>It passed on your machine because you ran it out of order.</h2>
+    <p class="lede">Jupyter lets you run cells in any order you like. The notebook remembers what you did — not what the file says. Hand it to someone else, and the file's own order is all they have.</p>
+    <div class="scenario">
+      <div class="cell"><div class="tag">Cell 1</div><code>print(young_survival_rate)</code></div>
+      <div class="cell bad"><div class="tag">Cell 2</div><code>young_survival_rate = df[df.Age &lt; 18].Survived.mean()</code></div>
+    </div>
+    <p class="lede" style="margin-top:18px; font-size:15px;">Run 2 then 1 in your kernel and it works fine. Run the file top to bottom — the order it's actually saved in — and cell 1 fails before cell 2 ever runs.</p>
+  </div>
+</section>
+
+<section class="approach">
+  <div class="wrap">
+    <div class="label">what's shipped</div>
+    <h2>Two checks, each catching a different kind of hidden state.</h2>
+    <p class="lede">Both read the .ipynb file as written — no kernel, no execution — and exit non-zero the moment something's wrong, so a pipeline can act on it.</p>
+    <div class="checks">
+      <div class="check">
+        <div class="num">01</div>
+        <h3>check-order</h3>
+        <p>Compares each cell's position in the file against its execution_count. A mismatch means the notebook only worked because someone ran it out of sequence.</p>
+        <div class="cmd">nbghost check-order notebook.ipynb</div>
+      </div>
+      <div class="check">
+        <div class="num">02</div>
+        <h3>check-refs</h3>
+        <p>Parses every cell with Python's own AST and tracks which variable is defined where. A cell using a name that isn't defined until a later cell gets flagged by position.</p>
+        <div class="cmd">nbghost check-refs notebook.ipynb</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case">
+  <div class="wrap">
+    <div class="label">a bug worth keeping</div>
+    <h2>A test passed for the wrong reason — and that hid a real bug.</h2>
+    <div class="case-grid">
+      <div class="case-story">
+        <p><strong>check-refs</strong> walked every name in a cell flat, with no idea of scope. A variable defined inside a function looked identical to one defined at the notebook's top level.</p>
+        <p>The first import-handling test passed immediately. That felt like confirmation. It wasn't — the function-local case simply hadn't been used anywhere else yet, so there was nothing for the flat walk to get wrong <em>on that test</em>.</p>
+        <p>A second, adversarial test — a variable local to a function, reused by name at the top level — failed instantly. The flat walk had no concept of "this name doesn't exist out here."</p>
+        <div class="verdict">The fix wasn't another special case. It was replacing the flat walk with a scope-aware visitor that simply never descends into a function, lambda, or comprehension body.</div>
+      </div>
+      <div class="compare">
+        <div class="row before">
+          <div class="k">flat name walk</div>
+          <div class="v">passes<br>by luck</div>
+        </div>
+        <div class="row after">
+          <div class="k">scope-aware visitor</div>
+          <div class="v">7 / 7<br>on purpose</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="label">proof, not theory</div>
+    <h2>Run against a real, messy notebook — not a clean fixture.</h2>
+    <p class="lede">Built on the Titanic dataset with a function, a loop, a list comprehension, and one cell run deliberately out of order — every case the unit tests cover, together, on real data.</p>
+    <div class="proof-grid">
+      <div class="proof-item"><div class="k">rows of real data</div><div class="v">891</div></div>
+      <div class="proof-item"><div class="k">hidden-state bug found</div><div class="v">1</div></div>
+      <div class="proof-item"><div class="k">false positives raised</div><div class="v">0</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="label" style="color:var(--navy);">where it stands</div>
+    <h2>Built one tested step at a time.</h2>
+    <div class="stat-row">
+      <div class="stat"><div class="v" data-target="15">0</div><div class="k">tests passing</div></div>
+      <div class="stat"><div class="v" data-target="2">0</div><div class="k">checks shipped</div></div>
+      <div class="stat"><div class="v" data-target="6">0</div><div class="k">layers planned</div></div>
+      <div class="stat"><div class="v" data-target="0">0</div><div class="k">manual test steps</div></div>
+    </div>
+    <div class="tags">
+      <span>Python</span><span>Typer</span><span>Rich</span><span>pytest</span><span>AST</span><span>Docker — next</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">nbghost · open source · a notebook reproducibility checker for CI</div>
+</footer>
+
+<script>
+  const counters = document.querySelectorAll('[data-target]');
+  const animate = (el) => {
+    const target = parseInt(el.dataset.target, 10);
+    const dur = 900;
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round(p * target);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => io.observe(c));
+</script>
+
+</body>
+</html>
